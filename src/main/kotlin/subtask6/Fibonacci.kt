@@ -4,21 +4,20 @@ class Fibonacci {
 
 
     fun productFibonacciSequenceFor(n: Int): IntArray {
-
         var firstNumber = 0
         var secondNumber = 1
-        var finalArray = arrayListOf<Int>()
+        var resultArray = arrayListOf<Int>()
 
         while (firstNumber * secondNumber <n){
-            var number = secondNumber
+            val bufferNumber = secondNumber
             secondNumber += firstNumber
-            firstNumber = number
+            firstNumber = bufferNumber
         }
         if (firstNumber * secondNumber == n){
-            finalArray = arrayListOf(firstNumber, secondNumber, 1)
+            resultArray = arrayListOf(firstNumber, secondNumber, 1)
         } else if (firstNumber * secondNumber > n){
-            finalArray = arrayListOf(firstNumber, secondNumber, 0)
+            resultArray = arrayListOf(firstNumber, secondNumber, 0)
         }
-        return finalArray.toIntArray()
+        return resultArray.toIntArray()
     }
 }

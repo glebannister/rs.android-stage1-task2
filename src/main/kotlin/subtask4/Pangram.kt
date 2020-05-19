@@ -6,22 +6,22 @@ import java.lang.StringBuilder
 class Pangram {
 
     fun getResult(inputString: String): String {
-        val arrayA = arrayOf('A', 'E', 'I', 'O', "Y", 'a', 'e', 'i', 'o', 'u', 'y')
+        val arrayVowels = arrayOf('A', 'E', 'I', 'O', 'U', 'Y', 'a', 'e', 'i', 'o', 'u', 'y')
         val str = inputString.split(" ").filter { it.isNotEmpty() && it[0] !='\n' }.sortedBy {
             if (isPangram(inputString)) {
-                amountOfVowels(it, arrayA)
-            } else notVowels(it, arrayA)
+                amountOfVowels(it, arrayVowels)
+            } else amountOfNotVowels(it, arrayVowels)
         }
         val result = ArrayList<String>()
         if (isPangram(inputString)){
             str.forEach {
                 val strBuilder = StringBuilder()
                 var counter = 0
-                for (c in it){
-                    if (arrayA.contains(c)){
+                for (i in it){
+                    if (arrayVowels.contains(i)){
                         counter++
-                        strBuilder.append(c.toUpperCase())
-                    } else strBuilder.append(c)
+                        strBuilder.append(i.toUpperCase())
+                    } else strBuilder.append(i)
                 }
                 strBuilder.insert(0, counter.toString())
                 result.add(strBuilder.toString())
@@ -31,7 +31,7 @@ class Pangram {
                 val strBuilder = StringBuilder()
                 var counter = 0
                 for (c in it) {
-                    if (c.isLetter() && !arrayA.contains(c)){
+                    if (c.isLetter() && !arrayVowels.contains(c)){
                         counter++
                         strBuilder.append(c.toUpperCase())
                     } else strBuilder.append(c)
@@ -42,18 +42,17 @@ class Pangram {
         }
         return result.joinToString(" ")
     }
+    private fun isPangram(string: String):Boolean{
+        val chekPangram = Array(26){false}
+        for (i in string.indices){
+            if (string[i].isLetter()){
+                chekPangram[string[i].toLowerCase() - 'a'] = true
+            }
+        }
+        return !chekPangram.contains(false)
+    }
 
-  private fun isPangram(string: String):Boolean{
-      val chek = Array(26){false}
-      for (i in string.indices){
-          if (string[i].isLetter()){
-              chek[string[i].toLowerCase() - 'a'] = true
-          }
-      }
-      return !chek.contains(false)
-  }
-
-    private fun notVowels (string: String, vowels: Array<*>):Int {
+    private fun amountOfNotVowels (string: String, vowels: Array<Char>):Int {
         var counter = 0
         for (i in string.indices){
             if (string[i].isLetter() && !vowels.contains(string[i])){
@@ -63,7 +62,7 @@ class Pangram {
         return counter
     }
 
-    private fun amountOfVowels (string: String, vowels: Array<*>):Int{
+    private fun amountOfVowels (string: String, vowels: Array<Char>):Int{
         var counter = 0
         for (i in string.indices){
             if (vowels.contains(string[i])){

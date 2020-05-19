@@ -6,13 +6,13 @@ class Abbreviation {
     fun abbreviationFromA(a: String, b: String): String {
         val upperCaseA = a.toUpperCase()
         val listB = b.toMutableList()
-        val setA = upperCaseA.toMutableList()
-        var response = ""
+        val listA = upperCaseA.toMutableList()
+        var result: String
 
-        val innerUpperCase = setA.intersect(listB).toMutableList()
-        if (innerUpperCase == listB){
-            response = "YES"
-        } else response = "NO"
-        return response
+        val upperCaseInside = listA.intersect(listB).toMutableList()
+        if (upperCaseInside == listB){
+            result = "YES"
+        } else result = "NO"
+        return result
     }
 }

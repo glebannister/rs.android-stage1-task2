@@ -9,19 +9,20 @@ import kotlin.reflect.KClass
 class Blocks {
 
     fun getData(blockA: Array<Any>, blockB: KClass<*>): Any {
-
         var resultClass:Any = ""
-
-        if (blockB == Int::class){
-            resultClass = ifNumber(blockA)
-        } else if (blockB == String::class){
-            resultClass = ifString(blockA)
-        } else if (blockB == LocalDate::class){
-            resultClass = ifDate(blockA)
+        when (blockB) {
+            Int::class -> {
+                resultClass = ifNumber(blockA)
+            }
+            String::class -> {
+                resultClass = ifString(blockA)
+            }
+            LocalDate::class -> {
+                resultClass = ifDate(blockA)
+            }
         }
         return resultClass
     }
-
     private fun ifNumber(blockA: Array<Any>):Int{
         return blockA.filterIsInstance<Int>().sumBy { it }
     }

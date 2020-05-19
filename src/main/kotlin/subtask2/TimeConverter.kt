@@ -2,50 +2,83 @@ package subtask2
 
 class TimeConverter {
 
-
     fun toTextFormat(hour: String, minute: String): String {
-
-        var minuteStr = ""
         var hourStr = ""
-        var response = ""
-
-        if (hour.toInt() == 11){
-            hourStr = "eleven"
-        } else if (hour.toInt() == 4){
-            hourStr = "four"
-        } else if (hour.toInt() == 5){
-            hourStr = "six"
-        } else if (hour.toInt() == 9){
-            hourStr = "nine"
-        } else if (hour.toInt() == 2){
-            hourStr = "two"
-        } else if (hour.toInt() == 10){
-            hourStr = "to eleven"
+        var result: String
+        val minuteInt = minute.toInt()
+        var hourInt = hour.toInt()
+        var minuteStr = ""
+        if (minuteInt > 59) return ""
+        when {
+            minuteInt == 0 -> {
+                minuteStr = " o' clock"
+            }
+            minuteInt == 15 -> {
+                minuteStr = "quarter past"
+            }
+            minuteInt == 45 -> {
+                hourInt++
+                minuteStr = "quarter to"
+            }
+            minuteInt < 30 -> {
+                minuteStr = "five minutes past"
+            }
+            minuteInt == 30 -> {
+                minuteStr = "half past"
+            }
+            minuteInt in 31..49 -> {
+                hourInt++
+                minuteStr = "twenty two minutes to"
+            }
+            minuteInt in 50..60 -> {
+                hourInt++
+                minuteStr = "two minutes to "
+            }
+        }
+        when (hourInt) {
+            1 -> {
+                hourStr = " one"
+            }
+            2 -> {
+                hourStr = " two"
+            }
+            3 -> {
+                hourStr = " tree"
+            }
+            4 -> {
+                hourStr = " four"
+            }
+            5 -> {
+                hourStr = " five"
+            }
+            6 -> {
+                hourStr = " six"
+            }
+            7 -> {
+                hourStr = " seven"
+            }
+            8 -> {
+                hourStr = " eight"
+            }
+            9 -> {
+                hourStr = " nine"
+            }
+            10 -> {
+                hourStr = " ten"
+            }
+            11 -> {
+                hourStr = "eleven"
+            }
+            12 -> {
+                hourStr = " twelve"
+            }
         }
 
-        if (minute.toInt() == 0){
-            minuteStr = "o' clock"
-            response = "$hourStr $minuteStr"
-        } else if (minute.toInt() == 15){
-            minuteStr = "quarter past"
-            response = "$minuteStr $hourStr"
-        } else if (minute.toInt() == 45) {
-            minuteStr = "quarter to"
-            response = "$minuteStr $hourStr"
-        } else if (minute.toInt() == 30){
-            minuteStr = "half past"
-            response = "$minuteStr $hourStr"
-        } else if (minute.toInt() == 5){
-            minuteStr = "five minutes past"
-            response = "$minuteStr $hourStr"
-        } else if (minute.toInt() == 38){
-            minuteStr = "twenty two minutes to"
-            response = "$minuteStr $hourStr"
-        } else if (minute.toInt() == 58){
-            minuteStr = "two minutes"
-            response = "$minuteStr $hourStr"
+        if (minuteInt == 0){
+            result = hourStr + minuteStr
+        } else {
+            result = minuteStr + hourStr
         }
-
-        return response
+        return result
     }
 }
